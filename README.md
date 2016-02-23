@@ -1,3 +1,5 @@
 # javaSpringBatchTraining
 
-Code pour le TP
+-implémenter PersonProcessor
+-ajouter un StepExecutionListener
+-ajouter un JobExecutionListener

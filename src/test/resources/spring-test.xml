@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+ 
+    <jdbc:embedded-database id="testDataSource" type="HSQL">
+        <jdbc:script location="classpath:schema-hsqldb.sql"/>
+        <jdbc:script location="classpath:schema.sql"/>
+    </jdbc:embedded-database>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="testDataSource"/>
+    </bean>
+    
+    <!-- stored job-meta in memory --> 
+    <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+        <property name="transactionManager" ref="transactionManager" />
+    </bean>
+    <bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository" />
+    </bean>
+    
+    <!-- Spring should auto load this bean -->
+    <bean class="org.springframework.batch.test.JobLauncherTestUtils"/>
+    
+    <!-- Scans within the base package of the application for @Components to configure as beans -->
+    <context:component-scan base-package="com.github.ffremont" />
+        
+    <job id="simpleStepJob" xmlns="http://www.springframework.org/schema/batch">
+        <step id="simpleStep">
+            <tasklet>
+                <chunk reader="personMemoryReader" writer="personDaoWriter" processor="personProcessor" commit-interval="2" />
+                <listeners>
+                    <listener ref="myStepExecutionListener"/>
+                </listeners>
+            </tasklet>
+        </step>
+    </job>
+    
+</beans>
