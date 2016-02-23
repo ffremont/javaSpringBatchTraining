@@ -3,6 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ffremont</groupId>
   <artifactId>javaSpringBatchTraining</artifactId>
+  <name>javaSpringBatchTrainingImpl</name>
   <version>1.0.0-SNAPSHOT</version>
   <build>
     <plugins>
@@ -95,6 +96,7 @@
     <spring.batch.version>3.0.6.RELEASE</spring.batch.version>
     <slf4j.version>1.7.7</slf4j.version>
     <junit.version>4.12</junit.version>
+    <hsqldb.version>2.3.2</hsqldb.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <logback.version>1.1.2</logback.version>
