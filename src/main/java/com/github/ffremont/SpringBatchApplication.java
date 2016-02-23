@@ -29,7 +29,7 @@ public class SpringBatchApplication {
         ClassPathXmlApplicationContext cpt = new ClassPathXmlApplicationContext("simple-job.xml");
         cpt.start();
         JobLauncher jobLauncher = (JobLauncher) cpt.getBean("jobLauncher");
-        Job job = (Job) cpt.getBean("partitionSimpleStepJob");
+        Job job = (Job) cpt.getBean("simpleStepJob");
         
         JobParameters parameter = new JobParametersBuilder().addDate("date", new Date()).toJobParameters();
         

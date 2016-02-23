@@ -18,8 +18,7 @@ public class PersonProcessor implements ItemProcessor<Person, Person>{
 
     @Override
     public Person process(Person i) throws Exception {
-        i.setPrenomNom( i.getPrenom()+" "+i.getNom() );
-        
+       
         return i;
     }
     
